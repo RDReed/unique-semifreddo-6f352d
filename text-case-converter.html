@@ -1,0 +1,189 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+
+  <title>Free Text Case Converter | Simple Creator Tools</title>
+  <meta name="description" content="Convert text to uppercase, lowercase, title case, sentence case, and capitalize each word for free." />
+
+  <style>
+    body {
+      font-family: Arial, sans-serif;
+      margin: 0;
+      background: #f5f7fb;
+      color: #222;
+    }
+
+    header {
+      background: #1f4e79;
+      color: white;
+      padding: 30px 20px;
+      text-align: center;
+    }
+
+    nav {
+      background: white;
+      padding: 15px;
+      text-align: center;
+      box-shadow: 0 2px 8px rgba(0,0,0,0.06);
+    }
+
+    nav a {
+      color: #1f4e79;
+      text-decoration: none;
+      margin: 0 12px;
+      font-weight: bold;
+    }
+
+    main {
+      max-width: 1000px;
+      margin: 30px auto;
+      padding: 20px;
+    }
+
+    .tool-box, .info-section {
+      background: white;
+      padding: 25px;
+      border-radius: 12px;
+      box-shadow: 0 4px 15px rgba(0,0,0,0.08);
+      margin-bottom: 30px;
+    }
+
+    textarea {
+      width: 100%;
+      min-height: 260px;
+      padding: 15px;
+      font-size: 16px;
+      border: 1px solid #ccc;
+      border-radius: 8px;
+      resize: vertical;
+      box-sizing: border-box;
+    }
+
+    .buttons {
+      margin-top: 20px;
+      display: flex;
+      gap: 10px;
+      flex-wrap: wrap;
+    }
+
+    button {
+      background: #1f4e79;
+      color: white;
+      border: none;
+      padding: 12px 18px;
+      border-radius: 8px;
+      cursor: pointer;
+      font-size: 15px;
+    }
+
+    button:hover {
+      background: #163a59;
+    }
+
+    footer {
+      text-align: center;
+      padding: 25px;
+      color: #666;
+      font-size: 0.9rem;
+    }
+  </style>
+</head>
+
+<body>
+
+  <header>
+    <h1>Free Text Case Converter</h1>
+    <p>Convert your text to uppercase, lowercase, title case, or sentence case.</p>
+  </header>
+
+  <nav>
+    <a href="index.html">Home</a>
+    <a href="word-counter.html">Word Counter</a>
+    <a href="text-case-converter.html">Text Case Converter</a>
+  </nav>
+
+  <main>
+
+    <section class="tool-box">
+      <textarea id="textInput" placeholder="Type or paste your text here..."></textarea>
+
+      <div class="buttons">
+        <button onclick="convertUppercase()">UPPERCASE</button>
+        <button onclick="convertLowercase()">lowercase</button>
+        <button onclick="convertTitleCase()">Title Case</button>
+        <button onclick="convertSentenceCase()">Sentence case</button>
+        <button onclick="copyText()">Copy Text</button>
+        <button onclick="clearText()">Clear Text</button>
+      </div>
+    </section>
+
+    <section class="info-section">
+      <h2>About This Text Case Converter</h2>
+      <p>
+        This free text case converter helps you quickly change the capitalization of your text.
+        It is useful for writers, students, YouTubers, bloggers, teachers, and content creators.
+      </p>
+
+      <h2>What Can You Use It For?</h2>
+      <ul>
+        <li>Fixing text typed in all caps</li>
+        <li>Creating cleaner titles</li>
+        <li>Preparing YouTube titles and descriptions</li>
+        <li>Cleaning copied text</li>
+        <li>Formatting blog posts, notes, and lesson content</li>
+      </ul>
+    </section>
+
+  </main>
+
+  <footer>
+    &copy; 2026 Simple Creator Tools. All rights reserved.
+  </footer>
+
+  <script>
+    const textInput = document.getElementById("textInput");
+
+    function convertUppercase() {
+      textInput.value = textInput.value.toUpperCase();
+    }
+
+    function convertLowercase() {
+      textInput.value = textInput.value.toLowerCase();
+    }
+
+    function convertTitleCase() {
+      textInput.value = textInput.value
+        .toLowerCase()
+        .replace(/\b\w/g, char => char.toUpperCase());
+    }
+
+    function convertSentenceCase() {
+      let text = textInput.value.toLowerCase();
+
+      text = text.replace(/(^\s*\w|[.!?]\s*\w)/g, function(char) {
+        return char.toUpperCase();
+      });
+
+      textInput.value = text;
+    }
+
+    function copyText() {
+      if (!textInput.value) {
+        alert("There is no text to copy.");
+        return;
+      }
+
+      navigator.clipboard.writeText(textInput.value)
+        .then(() => alert("Text copied!"))
+        .catch(() => alert("Unable to copy text."));
+    }
+
+    function clearText() {
+      textInput.value = "";
+    }
+  </script>
+
+</body>
+</html>
