@@ -1,0 +1,275 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+
+  <title>Free Word Counter Tool | Simple Creator Tools</title>
+
+  <meta name="description" content="Free online word counter tool. Count words, characters, sentences, paragraphs, and estimated reading time instantly." />
+
+  <style>
+    body {
+      font-family: Arial, sans-serif;
+      margin: 0;
+      background: #f5f7fb;
+      color: #222;
+    }
+
+    header {
+      background: #1f4e79;
+      color: white;
+      padding: 30px 20px;
+      text-align: center;
+    }
+
+    header h1 {
+      margin: 0;
+      font-size: 2rem;
+    }
+
+    header p {
+      margin-top: 10px;
+      font-size: 1rem;
+    }
+
+    main {
+      max-width: 1000px;
+      margin: 30px auto;
+      padding: 20px;
+    }
+
+    .tool-box {
+      background: white;
+      padding: 25px;
+      border-radius: 12px;
+      box-shadow: 0 4px 15px rgba(0,0,0,0.08);
+    }
+
+    textarea {
+      width: 100%;
+      min-height: 280px;
+      padding: 15px;
+      font-size: 16px;
+      border: 1px solid #ccc;
+      border-radius: 8px;
+      resize: vertical;
+      box-sizing: border-box;
+    }
+
+    .stats {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(160px, 1fr));
+      gap: 15px;
+      margin-top: 20px;
+    }
+
+    .stat-card {
+      background: #eef4fb;
+      padding: 18px;
+      border-radius: 10px;
+      text-align: center;
+      border: 1px solid #d5e3f3;
+    }
+
+    .stat-card h2 {
+      margin: 0;
+      font-size: 2rem;
+      color: #1f4e79;
+    }
+
+    .stat-card p {
+      margin: 8px 0 0;
+      font-size: 0.95rem;
+      color: #444;
+    }
+
+    .buttons {
+      margin-top: 20px;
+      display: flex;
+      gap: 10px;
+      flex-wrap: wrap;
+    }
+
+    button {
+      background: #1f4e79;
+      color: white;
+      border: none;
+      padding: 12px 18px;
+      border-radius: 8px;
+      cursor: pointer;
+      font-size: 15px;
+    }
+
+    button:hover {
+      background: #163a59;
+    }
+
+    .info-section {
+      background: white;
+      margin-top: 30px;
+      padding: 25px;
+      border-radius: 12px;
+      box-shadow: 0 4px 15px rgba(0,0,0,0.06);
+      line-height: 1.6;
+    }
+
+    footer {
+      text-align: center;
+      padding: 25px;
+      color: #666;
+      font-size: 0.9rem;
+    }
+
+    @media (max-width: 600px) {
+      header h1 {
+        font-size: 1.6rem;
+      }
+
+      main {
+        padding: 15px;
+      }
+    }
+  </style>
+</head>
+
+<body>
+
+  <header>
+    <h1>Free Word Counter Tool</h1>
+    <p>Count words, characters, sentences, paragraphs, and reading time instantly.</p>
+  </header>
+
+  <main>
+
+    <section class="tool-box">
+      <textarea id="textInput" placeholder="Type or paste your text here..."></textarea>
+
+      <div class="stats">
+        <div class="stat-card">
+          <h2 id="wordCount">0</h2>
+          <p>Words</p>
+        </div>
+
+        <div class="stat-card">
+          <h2 id="charCount">0</h2>
+          <p>Characters</p>
+        </div>
+
+        <div class="stat-card">
+          <h2 id="charNoSpaceCount">0</h2>
+          <p>Characters Without Spaces</p>
+        </div>
+
+        <div class="stat-card">
+          <h2 id="sentenceCount">0</h2>
+          <p>Sentences</p>
+        </div>
+
+        <div class="stat-card">
+          <h2 id="paragraphCount">0</h2>
+          <p>Paragraphs</p>
+        </div>
+
+        <div class="stat-card">
+          <h2 id="readingTime">0</h2>
+          <p>Minute Read</p>
+        </div>
+      </div>
+
+      <div class="buttons">
+        <button onclick="copyText()">Copy Text</button>
+        <button onclick="clearText()">Clear Text</button>
+      </div>
+    </section>
+
+    <section class="info-section">
+      <h2>About This Word Counter</h2>
+      <p>
+        This free word counter helps writers, students, teachers, bloggers, YouTubers,
+        and content creators quickly check the length of their writing.
+      </p>
+
+      <h2>What Can You Use It For?</h2>
+      <ul>
+        <li>Checking blog post length</li>
+        <li>Writing YouTube descriptions</li>
+        <li>Counting words for school assignments</li>
+        <li>Preparing sermons, lessons, or speeches</li>
+        <li>Estimating reading time for articles</li>
+      </ul>
+
+      <h2>How Reading Time Is Calculated</h2>
+      <p>
+        Reading time is estimated using about 200 words per minute.
+      </p>
+    </section>
+
+  </main>
+
+  <footer>
+    &copy; 2026 Simple Creator Tools. All rights reserved.
+  </footer>
+
+  <script>
+    const textInput = document.getElementById("textInput");
+
+    textInput.addEventListener("input", updateCounts);
+
+    function updateCounts() {
+      const text = textInput.value.trim();
+
+      const words = text.length > 0 ? text.match(/\b\w+\b/g) || [] : [];
+
+      const characters = textInput.value.length;
+
+      const charactersNoSpaces = textInput.value.replace(/\s/g, "").length;
+
+      const sentences = text.length > 0
+        ? text.split(/[.!?]+/).filter(sentence => sentence.trim().length > 0)
+        : [];
+
+      const paragraphs = text.length > 0
+        ? text.split(/\n+/).filter(paragraph => paragraph.trim().length > 0)
+        : [];
+
+      const readingMinutes = words.length > 0
+        ? Math.ceil(words.length / 200)
+        : 0;
+
+      document.getElementById("wordCount").textContent = words.length;
+      document.getElementById("charCount").textContent = characters;
+      document.getElementById("charNoSpaceCount").textContent = charactersNoSpaces;
+      document.getElementById("sentenceCount").textContent = sentences.length;
+      document.getElementById("paragraphCount").textContent = paragraphs.length;
+      document.getElementById("readingTime").textContent = readingMinutes;
+    }
+
+    function copyText() {
+      const text = textInput.value;
+
+      if (!text) {
+        alert("There is no text to copy.");
+        return;
+      }
+
+      navigator.clipboard.writeText(text)
+        .then(() => {
+          alert("Text copied!");
+        })
+        .catch(() => {
+          alert("Unable to copy text.");
+        });
+    }
+
+    function clearText() {
+      textInput.value = "";
+      updateCounts();
+    }
+  </script>
+
+</body>
+</html>
+```
+
+Confidence level: High
